@@ -115,6 +115,14 @@ textarea{min-height:44px;resize:vertical}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
 .ec{border:1px solid var(--border);border-radius:12px;padding:12px;position:relative;background:#fff}
 .ec.best{border-color:#7FB383;background:#F5FAF4}
+.ec{cursor:pointer;transition:box-shadow .15s,border-color .15s}
+.ec:hover{border-color:var(--cobre2)}
+.ec.sel{border:2px solid var(--cobre);box-shadow:0 0 0 3px var(--cobreL)}
+.ec .ck{font-size:11px;font-weight:600;color:var(--cobre);margin-top:6px;display:none}
+.ec.sel .ck{display:block}
+.selbox{margin-top:12px;padding:12px 14px;border-radius:12px;background:var(--cobreL);font-size:13px;line-height:1.5}
+.selbox b{color:var(--cobre)}
+.selbox.none{background:#FDECEA;color:#8a1c1c}
 .ec .n{font-weight:600;font-size:13px}
 .ec .v{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums;margin:4px 0}
 .ec.best .v{color:var(--ok)}
@@ -199,6 +207,7 @@ h4{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted
       <div class="ct">Vista Operaciones · Comparativa</div>
       <p class="sub">Presupuesto orientativo con cada ETT (tarifas 2026, sin IVA). Se guarda con la petición y va en el aviso a Operaciones. Eloquence PT solo aparece si el municipio es Portugal.</p>
       <div class="cards" id="cards"></div>
+      <div class="selbox" id="selbox"></div>
       <h4>Por día</h4>
       <table><thead><tr id="hday"></tr></thead><tbody id="byday"></tbody></table>
       <h4>Por categoría</h4>
@@ -336,7 +345,7 @@ function lineEl(v={}){
 }
 const get=el=>({d:el.querySelector(".fd").value,c:el.querySelector(".fc").value,n:el.querySelector(".fn").value,i:el.querySelector(".fi").value,f:el.querySelector(".ff").value});
 
-let LAST={};
+let LAST={},SEL="",SELMAN=false;
 function calc(){
   const now=new Date(),els=[...document.querySelectorAll(".ln")],lines=els.map(get);
   let jp=0;
@@ -354,11 +363,18 @@ function calc(){
   const A=ACTIVE(),R={};NAMES.forEach(n=>R[n]=evalEtt(n,lines,now));
   const elig=A.filter(n=>R[n].complete&&R[n].tot>0);
   const best=elig.length?elig.reduce((a,b)=>R[a].tot<=R[b].tot?a:b):"";
+  if(SEL&&!A.includes(SEL))SEL="";
+  if(!SEL&&!SELMAN&&best)SEL=best;
   LAST={R,best};
   $("cards").innerHTML=A.map(n=>{const r=R[n];
     const diff=best&&n!==best&&r.complete?`+${eur0(r.tot-R[best].tot)} vs ${best}`:(n===best?"Opción más barata":(r.complete?"":"No comparable"));
     const bd=n===best?'<span class="bd">Mejor</span>':(!r.complete&&r.tot>0?'<span class="bd inc">Incompl.</span>':"");
-    return `<div class="ec ${n===best?"best":""}">${bd}<div class="n">${n}</div><div class="v">${r.tot?eur0(r.tot):"—"}</div><div class="d">${diff}</div><div class="d">Cargo contrato: ${eur0(r.fee)}</div><ul>${[...r.warn].map(w=>`<li>${w}</li>`).join("")}</ul></div>`}).join("");
+    return `<div class="ec ${n===best?"best":""} ${n===SEL?"sel":""}" data-n="${n}">${bd}<div class="n">${n}</div><div class="v">${r.tot?eur0(r.tot):"—"}</div><div class="d">${diff}</div><div class="d">Cargo contrato: ${eur0(r.fee)}</div><ul>${[...r.warn].map(w=>`<li>${w}</li>`).join("")}</ul><div class="ck">✓ Seleccionada para enviar</div></div>`}).join("");
+  document.querySelectorAll(".ec").forEach(c=>c.onclick=()=>{SEL=c.dataset.n;SELMAN=true;calc()});
+  const rs=SEL?R[SEL]:null;
+  $("selbox").className="selbox"+(SEL?"":" none");
+  $("selbox").innerHTML=SEL?`ETT seleccionada: <b>${SEL}</b> · ${eur0(rs.tot)}${best&&SEL!==best?` (+${eur0(rs.tot-R[best].tot)} vs ${best})`:""}<br>Al enviar, la petición (sin precios) se manda a los contactos de ${SEL} y al personal PREMIUM configurado en Ajustes.${rs.complete?"":"<br><b>Ojo:</b> esta ETT no tiene tarifa para alguna categoría pedida."}`:"Haz clic en una tarjeta para elegir la ETT a la que se enviará la petición.";
+  $("send").textContent=SEL?"Enviar petición a "+SEL:"Enviar petición";
   const hdr=A.map(n=>`<th>${ETTS[n].s}</th>`).join("");
   $("hday").innerHTML="<th>Día</th>"+hdr;$("hcat").innerHTML="<th>Categoría</th>"+hdr;
   const row=(lab,fn)=>{const vals=A.map(n=>({n,v:fn(n)}));const ok=vals.filter(x=>x.v!=null&&R[x.n].complete);const mn=ok.length?Math.min(...ok.map(x=>x.v)):null;
@@ -385,6 +401,8 @@ $("f").addEventListener("submit",async ev=>{
     [["fd",!g.d],["fc",!g.c],["fn",!(+g.n>0)],["fi",!g.i],["ff",!g.f]].forEach(([c,b])=>{el.querySelector("."+c).classList.toggle("bad",b);if(b)ok=false})});
   $("err").style.display=ok?"none":"block";if(!ok)return;
   calc();
+  if(!SEL){toast("Elige en la comparativa la ETT a la que se enviará la petición.");return}
+  if(!confirm("Se enviará la petición a "+SEL+" y al personal PREMIUM configurado. ¿Continuar?"))return;
   const lines=[...document.querySelectorAll(".ln")].map(get);
   const {R,best}=LAST, r2=v=>Math.round(v*100)/100;
   const payload={
@@ -399,6 +417,8 @@ $("f").addEventListener("submit",async ev=>{
     lineas:lines.map(g=>({fecha:g.d,categoria:g.c,trabajadores:+g.n,horaInicio:g.i,horaFin:g.f})),
     presupH4E:r2(R["H4E"].tot),presupEloqES:r2(R["Eloquence ES"].tot),presupPP:r2(R["Pedra Petita"].tot),presupEloqPT:isPT()?r2(R["Eloquence PT"].tot):0,
     mejorETT:best,
+    ettAsignada:SEL,
+    presupAsignado:r2(R[SEL].tot),
     avisos:ACTIVE().map(n=>R[n].warn.size?`${n}: ${[...R[n].warn].join("; ")}`:"").filter(Boolean).join(" | ")
   };
   const b=$("send");b.disabled=true;b.textContent="Enviando…";
@@ -406,9 +426,9 @@ $("f").addEventListener("submit",async ev=>{
     const res=await fetch(FLOW_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
     if(!(res.ok||res.status===202)) throw new Error("HTTP "+res.status);
     let id="";try{id=(await res.json()).id||""}catch(e){}
-    $("donemsg").textContent=`${id?"Nº "+id+" · ":""}${payload.evento} · ${payload.solicitanteNombre} · ${lines.length} línea(s). Operaciones recibirá el aviso y asignará la ETT.`;
+    $("donemsg").textContent=`${id?"Nº "+id+" · ":""}${payload.evento} · ${payload.solicitanteNombre} · ${lines.length} línea(s). Enviada a ${SEL}.`;
     $("f").style.display="none";$("done").style.display="block";scrollTo(0,0);
-  }catch(e){toast("⚠ No se ha podido enviar. "+(typeof netErr==="function"?netErr(e):e.message));b.disabled=false;b.textContent="Enviar petición"}
+  }catch(e){toast("⚠ No se ha podido enviar. "+(typeof netErr==="function"?netErr(e):e.message));b.disabled=false;b.textContent="Enviar petición a "+SEL}
 });
 
 const EMBED=(()=>{try{return window.self!==window.top}catch(e){return true}})();
