@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Petición de personal ETT — PREMIUM Delevent</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F6F4EF;--card:#fff;--text:#18150F;--muted:#7A7268;--border:#E0DBD3;--field:#F1EEE8;--cobre:#96623A;--cobre2:#AB7B55;--cobreL:#F5ECE3;--ok:#2F6B3A;--okL:#EAF3EA;--warn:#B42318;--fest:#FBE7DA;--dom:#FFF4D6}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--text);font-family:"DM Sans",system-ui,sans-serif;font-size:14px}
+.page{max-width:1440px;margin:0 auto;padding:28px 16px 60px}
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 420px;gap:24px;align-items:start}
+@media(max-width:1200px){.layout{grid-template-columns:1fr}.side{position:static!important}}
+header{display:flex;align-items:center;justify-content:space-between;gap:16px;padding-bottom:22px;border-bottom:1px solid var(--border);margin-bottom:28px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:18px}
+.brand img{height:46px;display:none}
+.brand .word{font-family:"Cormorant Garamond",serif;font-size:38px;color:var(--cobre2);letter-spacing:.02em;line-height:1}
+.brand .sep{width:1px;height:38px;background:var(--border)}
+.brand .tt{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:#4a443c}
+.hdate{text-align:right;font-size:12px;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+.hdate b{display:block;font-size:14px;color:var(--text);letter-spacing:0;text-transform:none;font-weight:500;margin-top:4px}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:26px 28px;margin-bottom:22px}
+.ct{display:flex;align-items:center;gap:14px;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:18px}
+.ct:after{content:"";flex:1;height:1px;background:var(--border)}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px 18px}
+.g2{display:grid;grid-template-columns:repeat(2,1fr);gap:16px 18px}
+@media(max-width:760px){.g3,.g2{grid-template-columns:1fr}}
+label{display:block;font-size:13px;color:#3d372f;margin-bottom:6px}
+.req{color:var(--cobre)}
+input,select,textarea{width:100%;font:inherit;font-size:14px;color:var(--text);background:var(--field);border:1px solid var(--border);border-radius:10px;padding:10px 12px;outline:none;transition:border .15s,background .15s}
+input:focus,select:focus,textarea:focus{border-color:var(--cobre2);background:#fff}
+input.bad,select.bad{border-color:var(--warn);background:#FFF5F4}
+textarea{min-height:44px;resize:vertical}
+.help{font-size:12px;color:var(--muted);margin:6px 0 0}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.chip{font:inherit;font-size:12px;border:1px solid var(--border);background:#fff;color:var(--cobre);border-radius:20px;padding:3px 10px;cursor:pointer}
+.chip:hover{border-color:var(--cobre2);background:var(--cobreL)}
+.muni{display:flex;gap:8px}
+.muni select{flex:1}.muni input{flex:1;display:none}
+/* líneas */
+.ln{background:#FAF8F4;border:1px solid var(--border);border-radius:14px;padding:14px 16px;margin-bottom:12px}
+.ln.fest{background:var(--fest)}.ln.dom{background:var(--dom)}
+.lt{display:flex;align-items:center;gap:8px;margin-bottom:10px}
+.num{width:24px;height:24px;border-radius:50%;border:1px solid var(--border);display:inline-flex;align-items:center;justify-content:center;font-size:11px;color:var(--muted);background:#fff}
+.tag{font-size:11px;border:1px solid var(--border);border-radius:20px;padding:2px 9px;color:var(--muted);background:#fff}
+.tag.f{color:#9a3412;border-color:#f5c3a5}.tag.d{color:#8a6100;border-color:#f0dc9a}
+.lt .sp{flex:1}
+.ib{border:none;background:transparent;cursor:pointer;color:var(--muted);font:inherit;font-size:12px;padding:4px 8px;border-radius:8px}
+.ib:hover{background:var(--cobreL);color:var(--cobre)}
+.ib.del:hover{background:#FDECEA;color:var(--warn)}
+.lg{display:grid;grid-template-columns:1.3fr 1.2fr .6fr .8fr .8fr .7fr;gap:12px;align-items:end}
+@media(max-width:760px){.lg{grid-template-columns:1fr 1fr}}
+.lg label{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.hrs{background:#fff;border:1px solid var(--border);border-radius:10px;padding:10px 12px;text-align:right;font-variant-numeric:tabular-nums;color:var(--ok);font-weight:600}
+.add{width:100%;font:inherit;font-size:14px;color:var(--cobre);background:transparent;border:1px dashed var(--cobre2);border-radius:12px;padding:12px;cursor:pointer}
+.add:hover{background:var(--cobreL)}
+.tools{display:flex;gap:10px;margin-top:10px;flex-wrap:wrap}
+.tools .add{flex:1}
+.legend{font-size:12px;color:var(--muted);margin-top:12px}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:-1px;margin:0 5px 0 12px;border:1px solid var(--border)}
+.sum{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.sum .k{color:var(--muted);font-size:13px}
+.sum .k b{color:var(--text);font-weight:600}
+.btns{display:flex;gap:10px;flex-wrap:wrap}
+.btn{font:inherit;font-size:14px;font-weight:500;border-radius:10px;padding:12px 22px;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--text);display:inline-flex;align-items:center;gap:8px}
+.btn:hover{border-color:var(--cobre2)}
+.btn.pri{background:var(--cobre);border-color:var(--cobre);color:#fff}
+.btn.pri:hover{background:#7A4E2D}
+.btn:disabled{opacity:.6;cursor:wait}
+.err{color:var(--warn);font-size:13px;margin-top:10px;display:none}
+.done{display:none;text-align:center;padding:48px 28px}
+.done .ok{width:56px;height:56px;border-radius:50%;background:var(--okL);color:var(--ok);display:inline-flex;align-items:center;justify-content:center;font-size:28px;margin-bottom:12px}
+.done h2{margin:0 0 6px;font-weight:600}
+.done p{color:var(--muted);margin:0 0 20px}
+.hright{display:flex;align-items:center;gap:14px}
+.hbtn{font:inherit;font-size:13px;border:1px solid var(--border);background:#fff;color:var(--cobre);border-radius:10px;padding:8px 14px;cursor:pointer;display:inline-flex;align-items:center;gap:6px}
+.hbtn:hover{border-color:var(--cobre2);background:var(--cobreL)}
+.modal{position:fixed;inset:0;background:rgba(24,21,15,.45);display:none;align-items:flex-start;justify-content:center;padding:40px 16px;z-index:50;overflow:auto}
+.modal.on{display:flex}
+.mbox{background:#fff;border-radius:16px;max-width:640px;width:100%;padding:26px 28px;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.mbox h3{margin:0 0 4px;font-weight:600}
+.mbox .help{margin-bottom:16px}
+.mrow{margin-bottom:14px}
+.mbox textarea{min-height:80px;font-family:inherit}
+.mfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:18px;flex-wrap:wrap}
+.mmsg{font-size:13px;color:var(--muted)}
+.mmsg.ok{color:var(--ok)}.mmsg.bad{color:var(--warn)}
+.ptitle{display:none}
+@media print{
+  @page{size:A4;margin:12mm}
+  body{background:#fff;font-size:11px}
+  .page{padding:0;max-width:none}
+  .hright .hbtn,.tools,.legend,.lt .ib,.btns,.chips,.help,.err,.modal,.toast,.done{display:none!important}
+  .layout{display:block!important}
+  .side{position:static!important;break-before:auto;margin-top:10px}
+  .card{border:1px solid #ddd;padding:14px 16px;margin-bottom:10px;break-inside:avoid}
+  .ln{break-inside:avoid;padding:8px 10px;margin-bottom:6px}
+  input,select,textarea{border:none;background:transparent;padding:2px 0;-webkit-appearance:none;appearance:none}
+  textarea{min-height:0;resize:none}
+  .hrs{border:none;padding:2px 0;text-align:left}
+  .ptitle{display:block;font-size:12px;color:#555;margin-top:4px}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  ::placeholder{color:transparent!important}
+  select{color:var(--text)}
+  .side .sub{display:none}
+}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#18150F;color:#fff;padding:10px 18px;border-radius:10px;font-size:13px;opacity:0;transition:opacity .2s;pointer-events:none;max-width:90vw}
+.toast.on{opacity:1}
+/* panel operaciones */
+.side{position:sticky;top:20px}
+.side .card{padding:22px}
+.side .sub{font-size:12px;color:var(--muted);margin:-8px 0 14px}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.ec{border:1px solid var(--border);border-radius:12px;padding:12px;position:relative;background:#fff}
+.ec.best{border-color:#7FB383;background:#F5FAF4}
+.ec .n{font-weight:600;font-size:13px}
+.ec .v{font-size:21px;font-weight:700;font-variant-numeric:tabular-nums;margin:4px 0}
+.ec.best .v{color:var(--ok)}
+.ec .d{font-size:11.5px;color:var(--muted)}
+.ec .bd{position:absolute;top:10px;right:10px;font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:2px 7px;border-radius:10px;background:#5E9B63;color:#fff}
+.ec .bd.inc{background:var(--warn)}
+.ec ul{margin:6px 0 0;padding-left:14px;font-size:11px;color:#8a1c1c}
+.ec ul:empty{display:none}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:6px}
+td,th{padding:6px 4px;border-bottom:1px solid #EEEAE3;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
+td:first-child,th:first-child{text-align:left}
+th{font-weight:500;color:var(--muted);font-size:11px}
+td.b{background:var(--okL);color:var(--ok);font-weight:700}
+td.na{color:var(--warn)}
+h4{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin:18px 0 4px;font-weight:500}
+.note{font-size:11px;color:var(--muted);line-height:1.5;margin-top:14px}
+</style>
+</head>
+<body>
+<div class="page" id="page">
+  <header>
+    <div class="brand">
+      <img id="logo" alt="PREMIUM">
+      <span class="word" id="word">PREMIUM</span>
+      <span class="sep"></span>
+      <span class="tt">Petición de personal ETT</span>
+    </div>
+    <div class="hright"><button type="button" class="hbtn" id="btnPdf">⤓ Exportar PDF</button><button type="button" class="hbtn" id="btnAj">⚙ Ajustes</button><div class="hdate">Operaciones<b id="hoy"></b></div></div>
+  </header>
+
+<div id="vbanner" style="display:none;background:#FDECEA;color:#8a1c1c;border:1px solid #f5c2bd;border-radius:12px;padding:14px 18px;margin-bottom:18px;font-size:14px;line-height:1.5"><b>Estás viendo el formulario dentro del visor de SharePoint.</b> El visor bloquea Enviar, Ajustes y Exportar PDF. Cierra esta vista, marca el archivo y pulsa <b>Descargar</b>; después ábrelo con doble clic desde tu carpeta de Descargas.</div>
+  <div class="layout">
+  <main>
+    <form id="f" novalidate>
+      <section class="card">
+        <div class="ct">Datos del evento</div>
+        <div class="g3">
+          <div><label>Evento <span class="req">*</span></label><input id="evento" placeholder="Nombre o código BC"></div>
+          <div><label>Solicitante <span class="req">*</span></label>
+            <select id="solic"><option value="">— Seleccionar —</option></select></div>
+          <div><label>Recinto <span class="req">*</span></label><input id="recinto" placeholder="Fira Gran Via, CCIB, IFEMA, hotel…">
+            <div class="chips"><button type="button" class="chip">Fira Gran Via</button><button type="button" class="chip">Fira Montjuïc</button><button type="button" class="chip">CCIB</button><button type="button" class="chip">IFEMA Madrid</button></div></div>
+          <div><label>Municipio <span class="req">*</span></label>
+            <div class="muni"><select id="muni"><option value="">— Seleccionar —</option><option>Barcelona</option><option>Madrid</option><option value="Otro">Otro municipio (España)</option><option value="Portugal">Portugal</option></select>
+            <input id="muniOtro" placeholder="¿Cuál?"></div>
+            <p class="help">Fira Gran Via está en L'Hospitalet, no en Barcelona.</p></div>
+          <div><label>Contacto en destino</label><input id="contacto" placeholder="Nombre y teléfono"></div>
+          <div><label>Dirección <span class="req">*</span></label><input id="dir" placeholder="Calle, número, código postal"></div>
+        </div>
+        <div style="margin-top:16px"><label>Observaciones</label><textarea id="obs" placeholder="Punto de encuentro, EPIs, accesos, acreditaciones…"></textarea></div>
+      </section>
+
+      <section class="card">
+        <div class="ct">Personal por día</div>
+        <div id="lines"></div>
+        <div class="tools">
+          <button type="button" class="add" id="add">+ Añadir línea</button>
+          <button type="button" class="add" id="dupday">⧉ Copiar último día al siguiente</button>
+        </div>
+        <div class="legend">Una línea = misma categoría y mismo horario ese día. Si el turno acaba después de medianoche, pon la hora real (ej. 04:00).<i style="background:var(--fest)"></i>Festivo<i style="background:var(--dom)"></i>Domingo</div>
+        <div class="err" id="err">Revisa los campos marcados en rojo: son obligatorios y el nº debe ser mayor que 0.</div>
+      </section>
+
+      <section class="card">
+        <div class="sum">
+          <div class="k" id="resumen"></div>
+          <div class="btns"><button type="submit" class="btn pri" id="send">Enviar petición</button></div>
+        </div>
+      </section>
+    </form>
+
+    <section class="card done" id="done">
+      <div class="ok">✓</div>
+      <h2>Petición enviada</h2>
+      <p id="donemsg"></p>
+      <button class="btn pri" onclick="location.reload()">Nueva petición</button>
+    </section>
+  </main>
+
+  <aside class="side">
+    <section class="card">
+      <div class="ct">Vista Operaciones · Comparativa</div>
+      <p class="sub">Presupuesto orientativo con cada ETT (tarifas 2026, sin IVA). Se guarda con la petición y va en el aviso a Operaciones. Eloquence PT solo aparece si el municipio es Portugal.</p>
+      <div class="cards" id="cards"></div>
+      <h4>Por día</h4>
+      <table><thead><tr id="hday"></tr></thead><tbody id="byday"></tbody></table>
+      <h4>Por categoría</h4>
+      <table><thead><tr id="hcat"></tr></thead><tbody id="bycat"></tbody></table>
+      <p class="note">Horas redondeadas a la hora superior; recargos festivo/domingo sobre la base; nocturnidad según franja de cada ETT; urgencia según antelación; cargo por contrato por trabajador y día (H4E exime 10/día en BCN/MAD capital). No incluye taxi/km, uniformes ni acreditaciones.</p>
+    </section>
+  </aside>
+  </div>
+</div>
+<div class="modal" id="mAj"><div class="mbox">
+  <h3>Ajustes · Destinatarios de las peticiones</h3>
+  <p class="help">Correos que recibirán la petición cuando Operaciones asigne cada ETT. Separa varias direcciones con punto y coma (;). Los cambios se guardan en SharePoint (lista ETT Contactos) para todos.</p>
+  <div class="mrow"><label>Proveedor / grupo</label><select id="ajSel"></select></div>
+  <div class="mrow"><label id="ajParaL">Para</label><textarea id="ajPara" placeholder="correo1@empresa.com; correo2@empresa.com"></textarea></div>
+  <div class="mrow" id="ajCCrow"><label>CC</label><textarea id="ajCC" placeholder="Opcional"></textarea></div>
+  <div class="mrow"><label>Clave de Operaciones <span class="req">*</span></label><input id="ajClave" type="password" placeholder="Necesaria para guardar" autocomplete="off"></div>
+  <div class="mfoot"><span class="mmsg" id="ajMsg">Cargando…</span>
+    <div class="btns"><button type="button" class="btn" id="ajCerrar">Cerrar</button><button type="button" class="btn pri" id="ajGuardar">Guardar</button></div></div>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ======== CONFIGURACIÓN ======== */
+const FLOW_URL = "https://default3283f48758a341e88fce4b83155bc6.f8.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/08/workflows/5c4091967bad4e058beca1145756be33/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=sU5fo9_yjSfGogkzVTHEOf3SpC6QCOeZhSwBhEhZxqY";   // flujo Power Automate (HTTP) que guarda en SharePoint
+const EQUIPO = [
+  ["Alberto Fernández","alberto.fernandez@premiumdelevent.com"],
+  ["Anna Ramon","anna.ramon@premiumdelevent.com"],
+  ["Atanas Dimitrov","atanas.dimitrov@premiumdelevent.com"],
+  ["Bryan Camino","bryan.camino@premiumdelevent.com"],
+  ["Carlos Cardoza","carlos.cardoza@premiumdelevent.com"],
+  ["Eder Rodríguez","eder.rodriguez@premiumdelevent.com"],
+  ["Fernando Pazmiño","fernando.pazmino@premiumdelevent.com"],
+  ["Gonçal Bares","goncal.bares@premiumdelevent.com"],
+  ["Ivan Muñoz","ivan.munoz@premiumdelevent.com"],
+  ["Valentina Atozqui","valentina.atozqui@premiumdelevent.com"]
+];
+/* ======== Tarifas 2026 (lista ETT Tarifas) ======== */
+const ETTS={
+  "H4E":{s:"H4E",cal:"GENERAL",ni:22,nf:7,dom:.10,fest:.10,contrato:32.60,exCap:10,fueraCap:"Fuera de BCN/MAD capital: taxi/km no incluido",dietaDesde:6,dieta:0,urg:.20,urgH:12,coordMas:6,
+    cats:{Coordinador:{m:"HORA",ph:24.00,min:4,nE:1.50},Torero:{m:"HORA",ph:23.50,min:4,nE:1.50},Mozo:{m:"HORA",ph:18.50,min:4,nE:1.00}}},
+  "Eloquence ES":{s:"Eloq. ES",cal:"GENERAL",ni:22,nf:7,nP:.20,dom:.20,fest:.75,contrato:32.60,fueraCap:"Fuera de capital: posible 0,42 €/km no incluido",
+    cats:{Coordinador:{m:"TRAMOS",ph:25,t:[0,120,145,162]},Torero:{m:"TRAMOS",ph:23,t:[0,111,135,150]},Mozo:{m:"TRAMOS",ph:18,t:[68,87,105,120]}}},
+  "Pedra Petita":{s:"P. Petita",cal:"PP",ni:22,nf:6,nP:.50,dom:0,fest:.40,contrato:0,urg:.30,urgH:24,
+    cats:{Coordinador:{m:"HORA",ph:28.30,min:4},Torero:{m:"HORA",ph:27.09,min:4},Mozo:{m:"HORA",ph:20.93,min:4}}},
+  "Eloquence PT":{s:"Eloq. PT",cal:"GENERAL",ni:22,nf:7,dom:0,fest:0,contrato:0,dieta:12,dietaDesde:6,
+    cats:{Coordinador:{m:"TRAMOS",ph:23,t:[0,108,130,150]},Mozo:{m:"TRAMOS",ph:19,t:[75,92,110,126]}}}
+};
+const CAL={
+  GENERAL:new Set(["2026-12-08","2026-12-25","2026-12-26","2027-01-01","2027-01-06","2027-03-26","2027-05-01","2027-10-12","2027-11-01","2027-12-06","2027-12-08","2027-12-25"]),
+  PP:new Set(["2026-12-08","2026-12-25","2026-12-26"])
+};
+const NAMES=Object.keys(ETTS), CATS=["Coordinador","Torero","Mozo"];
+const $=id=>document.getElementById(id);
+
+let HOURS='<option value="">—</option>';for(let m=0;m<1440;m+=30){const t=String(m/60|0).padStart(2,"0")+":"+String(m%60).padStart(2,"0");HOURS+=`<option>${t}</option>`}
+const CATOPT='<option value="">—</option>'+CATS.map(c=>`<option>${c}</option>`).join("");
+const eur0=v=>v.toLocaleString("es-ES",{maximumFractionDigits:0})+" €";
+const fr=t=>{const[h,m]=t.split(":").map(Number);return(h*60+m)/1440};
+const wd=d=>new Date(d+"T00:00:00Z").getUTCDay();
+const addDays=(d,n)=>{const x=new Date(d+"T00:00:00Z");x.setUTCDate(x.getUTCDate()+n);return x.toISOString().slice(0,10)};
+const fmtD=d=>new Date(d+"T00:00:00Z").toLocaleDateString("es-ES",{weekday:"short",day:"2-digit",month:"2-digit",timeZone:"UTC"});
+const ceil=x=>Math.ceil(Math.round(x*1e6)/1e6);
+const tipoCal=(d,cal)=>!d?"":(CAL[cal].has(d)?"Festivo":(wd(d)===0?"Domingo":"Laborable"));
+const today=new Date().toISOString().slice(0,10);
+$("hoy").textContent=new Date().toLocaleDateString("es-ES",{weekday:"long",day:"numeric",month:"long",year:"numeric"});
+EQUIPO.forEach(([n,e])=>$("solic").insertAdjacentHTML("beforeend",`<option value="${e}">${n}</option>`));
+
+/* logo: reutiliza el del formulario de salas (mismo sitio) */
+fetch("https://jlcadiz-eng.github.io/presupuesto-premium/presupuesto_premium_v10.html").then(r=>r.ok?r.text():"").then(t=>{const m=t.match(/data:image\/png;base64,[A-Za-z0-9+/=]+/);if(m){$("logo").src=m[0];$("logo").style.display="block";$("word").style.display="none"}}).catch(()=>{});
+
+function lineCost(g,name,now){
+  const E=ETTS[name]; if(!E||!g.i||!g.f||!g.c) return null;
+  const s=fr(g.i), e=s+(((fr(g.f)-s)%1)+1)%1, hf=ceil((e-s)*24);
+  const NI=E.ni/24, NF=E.nf/24;
+  const nr=(Math.max(0,Math.min(e,NF)-s)+Math.max(0,Math.min(e,1+NF)-Math.max(s,NI))+Math.max(0,Math.min(e,2+NF)-Math.max(s,1+NI)))*24;
+  const hn=Math.min(hf,ceil(nr)), tipo=tipoCal(g.d,E.cal);
+  const C=E.cats[g.c]; if(!C) return {hf,missing:true};
+  let base,hEq;
+  if(C.m==="HORA"){hEq=Math.max(hf,C.min||0);base=hEq*C.ph}
+  else{hEq=hf;base=hf<=3?(C.t[0]||C.t[1]):hf<=4?C.t[1]:hf<=5?C.t[2]:hf<=6?C.t[3]:hf*C.ph}
+  let rd=0; if(tipo==="Festivo") rd=Math.max(E.fest||0,wd(g.d)===0?(E.dom||0):0); else if(tipo==="Domingo") rd=E.dom||0;
+  const extraN=C.nE?hn*C.nE:(base/hEq)*hn*(E.nP||0);
+  let urg=0; if(E.urg&&g.d){const st=new Date(g.d+"T"+g.i+":00");if((st-now)/36e5<E.urgH) urg=E.urg}
+  const dieta=(E.dieta&&hf>=E.dietaDesde)?E.dieta:0;
+  const dietaFalta=(E.dietaDesde&&!E.dieta&&hf>=E.dietaDesde);
+  return {hf,tipo,urg,dietaFalta,cost:(base*(1+rd)+extraN)*(1+urg)+dieta};
+}
+const muniVal=()=>$("muni").value==="Otro"?$("muniOtro").value.trim():$("muni").value==="Portugal"?($("muniOtro").value.trim()+" (Portugal)"):$("muni").value;
+const isPT=()=>$("muni").value==="Portugal";
+const ACTIVE=()=>NAMES.filter(n=>n!=="Eloquence PT"||isPT());
+const isCap=()=>["Barcelona","Madrid"].includes($("muni").value);
+function evalEtt(name,lines,now){
+  const E=ETTS[name],res={tot:0,fee:0,miss:new Set(),warn:new Set(),days:{},cats:{}},ok=[];
+  lines.forEach(g=>{
+    if(!g.d||!(+g.n>0))return; const r=lineCost(g,name,now); if(!r)return;
+    if(r.missing){res.miss.add(g.c);return}
+    ok.push(g); const v=g.n*r.cost; res.tot+=v;
+    res.days[g.d]=(res.days[g.d]||0)+v; res.cats[g.c]=(res.cats[g.c]||0)+v;
+    if(r.urg) res.warn.add(`Urgencia +${r.urg*100}% (<${E.urgH} h)`);
+    if(r.dietaFalta) res.warn.add(`Dieta ≥${E.dietaDesde} h sin importe`);
+  });
+  if(E.coordMas){
+    const byD={};lines.forEach(g=>{if(!g.d||!(+g.n>0))return;const o=byD[g.d]||(byD[g.d]={w:0,c:0});if(g.c==="Coordinador")o.c+=+g.n;else if(g.c)o.w+=+g.n});
+    Object.keys(byD).sort().forEach(d=>{if(byD[d].w>E.coordMas&&!byD[d].c)res.warn.add(`Exige coordinador el ${fmtD(d)}`)});
+  }
+  if(E.contrato){
+    const cap=isCap(),D={}; ok.forEach(g=>D[g.d]=(D[g.d]||0)+ +g.n);
+    ok.forEach(g=>{const ex=(E.exCap&&cap)?Math.min(E.exCap,D[g.d]):0,f=E.contrato*g.n*(D[g.d]-ex)/D[g.d];
+      res.fee+=f;res.tot+=f;res.days[g.d]+=f;res.cats[g.c]+=f;});
+  }
+  if(E.fueraCap&&$("muni").value==="Otro") res.warn.add(E.fueraCap);
+  if(isPT()&&name!=="Eloquence PT") res.warn.add("Servicio en Portugal: confirmar disponibilidad y desplazamiento");
+  if(res.miss.size) res.warn.add(`Sin tarifa: ${[...res.miss].join(", ")}`);
+  res.complete=!res.miss.size;
+  return res;
+}
+
+function lineEl(v={}){
+  const el=document.createElement("div");el.className="ln";
+  el.innerHTML=`<div class="lt"><span class="num"></span><span class="tag">—</span><span class="sp"></span>
+    <button type="button" class="ib dup">⧉ Copiar al día siguiente</button><button type="button" class="ib del">✕ Eliminar</button></div>
+  <div class="lg">
+    <div><label>Fecha</label><input type="date" class="fd" min="${today}" value="${v.d||""}"></div>
+    <div><label>Categoría</label><select class="fc">${CATOPT}</select></div>
+    <div><label>Nº</label><input type="number" min="1" step="1" class="fn" value="${v.n||1}"></div>
+    <div><label>Inicio</label><select class="fi">${HOURS}</select></div>
+    <div><label>Fin</label><select class="ff">${HOURS}</select></div>
+    <div><label>Horas fact.</label><div class="hrs">—</div></div>
+  </div>`;
+  el.querySelector(".fc").value=v.c||"Mozo";el.querySelector(".fi").value=v.i||"08:00";el.querySelector(".ff").value=v.f||"16:00";
+  el.querySelector(".dup").onclick=()=>{const g=get(el);g.d=g.d?addDays(g.d,1):"";el.after(lineEl(g));calc()};
+  el.querySelector(".del").onclick=()=>{if(document.querySelectorAll(".ln").length>1){el.remove();calc()}};
+  el.querySelectorAll("input,select").forEach(x=>x.addEventListener("input",calc));
+  return el;
+}
+const get=el=>({d:el.querySelector(".fd").value,c:el.querySelector(".fc").value,n:el.querySelector(".fn").value,i:el.querySelector(".fi").value,f:el.querySelector(".ff").value});
+
+let LAST={};
+function calc(){
+  const now=new Date(),els=[...document.querySelectorAll(".ln")],lines=els.map(get);
+  let jp=0;
+  els.forEach((el,k)=>{
+    const g=lines[k],t=tipoCal(g.d,"GENERAL"),tag=el.querySelector(".tag");
+    el.querySelector(".num").textContent=k+1;
+    el.classList.toggle("fest",t==="Festivo");el.classList.toggle("dom",t==="Domingo");
+    tag.className="tag"+(t==="Festivo"?" f":t==="Domingo"?" d":"");
+    tag.textContent=g.d?(fmtD(g.d)+(t&&t!=="Laborable"?" · "+t:"")):"Sin fecha";
+    const h=el.querySelector(".hrs");
+    if(g.i&&g.f){const s=fr(g.i),e=s+(((fr(g.f)-s)%1)+1)%1;h.textContent=ceil((e-s)*24)+" h"}else h.textContent="—";
+    jp+=(+g.n>0?+g.n:0);
+  });
+  $("resumen").innerHTML=`<b>${lines.length}</b> línea${lines.length>1?"s":""} · <b>${jp}</b> jornadas-persona · <b>${new Set(lines.map(g=>g.d).filter(Boolean)).size}</b> día(s)`;
+  const A=ACTIVE(),R={};NAMES.forEach(n=>R[n]=evalEtt(n,lines,now));
+  const elig=A.filter(n=>R[n].complete&&R[n].tot>0);
+  const best=elig.length?elig.reduce((a,b)=>R[a].tot<=R[b].tot?a:b):"";
+  LAST={R,best};
+  $("cards").innerHTML=A.map(n=>{const r=R[n];
+    const diff=best&&n!==best&&r.complete?`+${eur0(r.tot-R[best].tot)} vs ${best}`:(n===best?"Opción más barata":(r.complete?"":"No comparable"));
+    const bd=n===best?'<span class="bd">Mejor</span>':(!r.complete&&r.tot>0?'<span class="bd inc">Incompl.</span>':"");
+    return `<div class="ec ${n===best?"best":""}">${bd}<div class="n">${n}</div><div class="v">${r.tot?eur0(r.tot):"—"}</div><div class="d">${diff}</div><div class="d">Cargo contrato: ${eur0(r.fee)}</div><ul>${[...r.warn].map(w=>`<li>${w}</li>`).join("")}</ul></div>`}).join("");
+  const hdr=A.map(n=>`<th>${ETTS[n].s}</th>`).join("");
+  $("hday").innerHTML="<th>Día</th>"+hdr;$("hcat").innerHTML="<th>Categoría</th>"+hdr;
+  const row=(lab,fn)=>{const vals=A.map(n=>({n,v:fn(n)}));const ok=vals.filter(x=>x.v!=null&&R[x.n].complete);const mn=ok.length?Math.min(...ok.map(x=>x.v)):null;
+    return `<tr><td>${lab}</td>`+vals.map(x=>x.v==null?`<td class="na">s/t</td>`:`<td class="${R[x.n].complete&&x.v===mn?"b":""}">${eur0(x.v)}</td>`).join("")+"</tr>"};
+  const days=[...new Set(lines.filter(g=>g.d&&+g.n>0&&g.c).map(g=>g.d))].sort();
+  $("byday").innerHTML=days.map(d=>row(fmtD(d),n=>lines.some(g=>g.d===d&&+g.n>0&&R[n].miss.has(g.c))?null:(R[n].days[d]||0))).join("")||'<tr><td colspan="'+(A.length+1)+'">—</td></tr>';
+  const cats=CATS.filter(c=>lines.some(g=>g.c===c&&+g.n>0&&g.d));
+  $("bycat").innerHTML=cats.map(c=>row(c,n=>R[n].miss.has(c)?null:(R[n].cats[c]||0))).join("")||'<tr><td colspan="'+(A.length+1)+'">—</td></tr>';
+}
+
+function toast(t){const x=$("toast");x.textContent=t;x.classList.add("on");clearTimeout(x._t);x._t=setTimeout(()=>x.classList.remove("on"),3500)}
+
+$("add").onclick=()=>{const ls=document.querySelectorAll(".ln"),last=ls[ls.length-1];$("lines").append(lineEl(last?{...get(last),n:1}:{}));calc()};
+$("dupday").onclick=()=>{const all=[...document.querySelectorAll(".ln")].map(get).filter(g=>g.d);if(!all.length)return;
+  const lastD=all.map(g=>g.d).sort().pop(),next=addDays(lastD,1);all.filter(g=>g.d===lastD).forEach(g=>$("lines").append(lineEl({...g,d:next})));calc()};
+$("muni").addEventListener("change",()=>{const v=$("muni").value;$("muniOtro").style.display=(v==="Otro"||v==="Portugal")?"block":"none";$("muniOtro").placeholder=v==="Portugal"?"Ciudad":"¿Cuál?";calc()});
+document.querySelectorAll(".chip").forEach(c=>c.onclick=()=>{$("recinto").value=c.textContent;if(c.textContent==="Fira Gran Via"){$("muni").value="Otro";$("muniOtro").style.display="block";$("muniOtro").value="L'Hospitalet de Llobregat"}else if(/Montjuïc|CCIB/.test(c.textContent))$("muni").value="Barcelona";else if(/IFEMA/.test(c.textContent))$("muni").value="Madrid";calc()});
+
+$("f").addEventListener("submit",async ev=>{
+  ev.preventDefault();let ok=true;
+  ["evento","solic","recinto","muni","dir"].forEach(id=>{const b=!$(id).value.trim();$(id).classList.toggle("bad",b);if(b)ok=false});
+  const bo=["Otro","Portugal"].includes($("muni").value)&&!$("muniOtro").value.trim();$("muniOtro").classList.toggle("bad",bo);if(bo)ok=false;
+  document.querySelectorAll(".ln").forEach(el=>{const g=get(el);
+    [["fd",!g.d],["fc",!g.c],["fn",!(+g.n>0)],["fi",!g.i],["ff",!g.f]].forEach(([c,b])=>{el.querySelector("."+c).classList.toggle("bad",b);if(b)ok=false})});
+  $("err").style.display=ok?"none":"block";if(!ok)return;
+  calc();
+  const lines=[...document.querySelectorAll(".ln")].map(get);
+  const {R,best}=LAST, r2=v=>Math.round(v*100)/100;
+  const payload={
+    evento:$("evento").value.trim(),
+    solicitanteNombre:$("solic").selectedOptions[0].text,
+    solicitanteEmail:$("solic").value,
+    recinto:$("recinto").value.trim(),
+    municipio:muniVal(),
+    contacto:$("contacto").value.trim(),
+    direccion:$("dir").value.trim(),
+    observaciones:$("obs").value.trim(),
+    lineas:lines.map(g=>({fecha:g.d,categoria:g.c,trabajadores:+g.n,horaInicio:g.i,horaFin:g.f})),
+    presupH4E:r2(R["H4E"].tot),presupEloqES:r2(R["Eloquence ES"].tot),presupPP:r2(R["Pedra Petita"].tot),presupEloqPT:isPT()?r2(R["Eloquence PT"].tot):0,
+    mejorETT:best,
+    avisos:ACTIVE().map(n=>R[n].warn.size?`${n}: ${[...R[n].warn].join("; ")}`:"").filter(Boolean).join(" | ")
+  };
+  const b=$("send");b.disabled=true;b.textContent="Enviando…";
+  try{
+    const res=await fetch(FLOW_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(payload)});
+    if(!(res.ok||res.status===202)) throw new Error("HTTP "+res.status);
+    let id="";try{id=(await res.json()).id||""}catch(e){}
+    $("donemsg").textContent=`${id?"Nº "+id+" · ":""}${payload.evento} · ${payload.solicitanteNombre} · ${lines.length} línea(s). Operaciones recibirá el aviso y asignará la ETT.`;
+    $("f").style.display="none";$("done").style.display="block";scrollTo(0,0);
+  }catch(e){toast("⚠ No se ha podido enviar. "+(typeof netErr==="function"?netErr(e):e.message));b.disabled=false;b.textContent="Enviar petición"}
+});
+
+const EMBED=(()=>{try{return window.self!==window.top}catch(e){return true}})();
+const netErr=e=>EMBED?"El visor de SharePoint bloquea la conexión. Descarga el archivo y ábrelo con doble clic (o usa el enlace web).":("sin conexión: "+e.message);
+if(EMBED){document.getElementById("vbanner").style.display="block"}
+/* ======== Exportar PDF ======== */
+$("btnPdf").onclick=()=>{calc();const t=document.title;document.title="Peticion ETT - "+($("evento").value.trim()||"sin nombre")+" - "+today;window.print();setTimeout(()=>document.title=t,500)};
+
+/* ======== Ajustes de destinatarios ======== */
+const AJ_URL="https://default3283f48758a341e88fce4b83155bc6.f8.environment.api.powerplatform.com:443/powerautomate/automations/direct/cu/31/workflows/ed9633c7c87a405b97c27e28ba2a736f/triggers/manual/paths/invoke?api-version=1&sp=%2Ftriggers%2Fmanual%2Frun&sv=1.0&sig=2pEFCbCnGXfvQMqaZ2ti1Zs6bjJn3Inh_5UWOyCfsnQ";
+let AJ=[],ajCur=null;
+const ajLabel=r=>/^PREMIUM/.test(r.Title)?"Personal PREMIUM (reciben TODAS las peticiones)":r.Title;
+function ajShow(){const r=AJ.find(x=>String(x.Id)===$("ajSel").value);ajCur=r;if(!r)return;
+  $("ajPara").value=(r.Para||"").replace(/\s*;\s*/g,"; ");$("ajCC").value=(r.CC||"").replace(/\s*;\s*/g,"; ");
+  const prem=/^PREMIUM/.test(r.Title);$("ajParaL").textContent=prem?"Correos (compras, montajes, etc.)":"Para";$("ajCCrow").style.display=prem?"none":"block"}
+function ajKeep(){if(!ajCur)return;ajCur.Para=$("ajPara").value;ajCur.CC=$("ajCC").value;ajCur._dirty=true}
+async function ajCall(body){const r=await fetch(AJ_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)});if(!r.ok)throw new Error("HTTP "+r.status);return r.json()}
+$("btnAj").onclick=async()=>{$("mAj").classList.add("on");$("ajMsg").className="mmsg";$("ajMsg").textContent="Cargando…";
+  try{const d=await ajCall({});AJ=d.items||[];$("ajSel").innerHTML=AJ.map(r=>`<option value="${r.Id}">${ajLabel(r)}</option>`).join("");ajShow();$("ajMsg").textContent="Configuración cargada."}
+  catch(e){$("ajMsg").className="mmsg bad";$("ajMsg").textContent="No se ha podido cargar: "+netErr(e)}};
+$("ajSel").onchange=()=>{ajKeep();ajShow()};
+$("ajCerrar").onclick=()=>$("mAj").classList.remove("on");
+$("ajGuardar").onclick=async()=>{ajKeep();
+  const clean=v=>(v||"").split(/[;,\n]+/).map(x=>x.trim()).filter(Boolean).join(";");
+  const bad=AJ.filter(r=>r._dirty).flatMap(r=>[...clean(r.Para).split(";"),...clean(r.CC).split(";")]).filter(x=>x&&!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(x));
+  if(bad.length){$("ajMsg").className="mmsg bad";$("ajMsg").textContent="Correo no válido: "+bad[0];return}
+  if(!$("ajClave").value){$("ajMsg").className="mmsg bad";$("ajMsg").textContent="Introduce la clave de Operaciones.";return}
+  const cont=AJ.filter(r=>r._dirty).map(r=>({id:r.Id,para:clean(r.Para),cc:clean(r.CC)}));
+  $("ajMsg").className="mmsg";$("ajMsg").textContent="Guardando…";
+  try{const d=await ajCall({clave:$("ajClave").value,contactos:cont});
+    if(!d.ok){$("ajMsg").className="mmsg bad";$("ajMsg").textContent="Clave incorrecta. No se ha guardado nada.";return}
+    AJ=d.items||[];ajShow();$("ajMsg").className="mmsg ok";$("ajMsg").textContent="✓ Guardado ("+cont.length+" grupo/s actualizados).";}
+  catch(e){$("ajMsg").className="mmsg bad";$("ajMsg").textContent="Error al guardar: "+netErr(e)}};
+
+$("lines").append(lineEl({d:""}));
+calc();
+</script>
+</body>
+</html>
